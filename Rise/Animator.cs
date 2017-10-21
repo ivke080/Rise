@@ -12,6 +12,8 @@ namespace Rise
 
         private int frames; // number of frames for current animation
 
+        private int startFrame; // animation start frame
+
         private float time; // duration of current animation in seconds
         private float elapsedTime;
 
@@ -21,11 +23,12 @@ namespace Rise
 
         private bool singleFrame;
 
-        public Animator(Texture2D texture, Vector2 frameSize, Vector2 position)
+        public Animator(Texture2D texture, Vector2 frameSize, Vector2 position, int startFrame)
         {
             this.texture = texture;
             this.frameSize = frameSize;
             this.position = position;
+            this.startFrame = startFrame;
 
             currentX = 0;
             currentY = -1;
@@ -34,16 +37,16 @@ namespace Rise
 
         public void PlaySingle(int frameX, int frameY)
         {
-            if (singleFrame)
-            {
-                return;
-            }
+            // commented for player to move properly while mid-air
+            //if (!singleFrame)
+            //{
+                singleFrame = true;
+                currentFrame.X = frameX * (int)frameSize.X;
+                currentFrame.Y = frameY * (int)frameSize.Y;
 
-            singleFrame = true;
-            currentX = frameX;
-            currentY = frameY;
-            currentFrame.X = currentX * (int)frameSize.X;
-            currentFrame.Y = currentY * (int)frameSize.Y;
+                currentY = -1;
+                currentX = 0;
+            //}
         }
         public void Play(int row, int frames, float time)
         {
@@ -53,8 +56,8 @@ namespace Rise
                 this.time = time;
                 singleFrame = false;
                 currentY = row;
-                currentX = 0;
-                currentFrame.X = 0;
+                currentX = startFrame;
+                currentFrame.X = startFrame;
                 currentFrame.Y = row * (int)frameSize.Y;
             }
         }

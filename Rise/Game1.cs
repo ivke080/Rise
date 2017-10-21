@@ -6,13 +6,23 @@ namespace Rise
 {
     public class Game1 : Game
     {
+
+        public const float GRAVITY = 5f;
+        public const int WIDTH = 640;
+        public const int HEIGHT = 720;
+
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Animator animator;
+        Player player;
 
         public Game1()
         {
-            graphics = new GraphicsDeviceManager(this);
+            graphics = new GraphicsDeviceManager(this)
+            {
+                IsFullScreen = false,
+                PreferredBackBufferWidth = WIDTH,
+                PreferredBackBufferHeight = HEIGHT
+            };
             Content.RootDirectory = "Content";
         }
         
@@ -25,8 +35,8 @@ namespace Rise
         {
             // TODO: Add your initialization logic here
 
-            animator = new Animator(this.Content.Load<Texture2D>("character"), new Vector2(96, 64), new Vector2(100, 100));
-            animator.Play(0, 4, 0.1f);
+            player = new Player(this.Content, new Vector2(100, HEIGHT - 64));
+
             base.Initialize();
         }
         
@@ -57,7 +67,16 @@ namespace Rise
                 Exit();
 
             // TODO: Add your update logic here
-            animator.Update(gameTime);
+
+            if (player.Bounds.Y + player.Bounds.Height >= HEIGHT)
+            {
+                player.OnGround = true;
+                player.Y = HEIGHT - player.Bounds.Height;
+            }
+
+            player.Controls(Keyboard.GetState());
+            player.Update(gameTime);
+
             base.Update(gameTime);
         }
         
@@ -71,7 +90,7 @@ namespace Rise
 
             spriteBatch.Begin();
 
-            animator.Draw(spriteBatch);
+            player.Draw(spriteBatch);
 
             spriteBatch.End();
 
