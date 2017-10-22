@@ -14,6 +14,7 @@ namespace Rise
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Player player;
+        Platform solid;
 
         public Game1()
         {
@@ -36,6 +37,7 @@ namespace Rise
             // TODO: Add your initialization logic here
 
             player = new Player(this.Content, new Vector2(100, HEIGHT - 64));
+            solid = new SolidPlatform(this.Content.Load<Texture2D>("stone_ground_long"), new Vector2(300, HEIGHT - 200), PlatformSize.Long);
 
             base.Initialize();
         }
@@ -56,6 +58,7 @@ namespace Rise
         protected override void UnloadContent()
         {
             // TODO: Unload any non ContentManager content here
+            Content.Unload();
         }
         
         /// Allows the game to run logic such as updating the world,
@@ -91,6 +94,7 @@ namespace Rise
             spriteBatch.Begin();
 
             player.Draw(spriteBatch);
+            solid.Draw(spriteBatch);
 
             spriteBatch.End();
 

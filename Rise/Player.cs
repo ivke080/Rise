@@ -14,29 +14,29 @@ namespace Rise
     }
     class Player
     {
-        private Animator animation;
-        private Vector2 position;
-        private Vector2 velocity;
+        private Animator _animation;
+        private Vector2 _position;
+        private Vector2 _velocity;
 
-        private Movement movement = Movement.None;
-        private Movement lastMovement = Movement.Right;
+        private Movement _movement = Movement.None;
+        private Movement _lastMovement = Movement.Right;
 
-        private Rectangle bounds;
+        private Rectangle _bounds;
 
-        private float moveSpeed = 20;
-        private float jumpForce = -100;
-        private float time = 0.1f;
-        private int boundsOffsetX = 12; // sprite is wider than actual character
-        private bool onGround = false;
+        private float _moveSpeed = 20;
+        private float _jumpForce = -120;
+        private float _time = 0.1f;
+        private int _boundsOffsetX = 12; // sprite is wider than actual character
+        private bool _onGround = false;
 
-        private const int FRAMES = 4;
+        private const int Frames = 4;
 
         public Player(ContentManager content, Vector2 position)
         {
-            animation = new Animator(content.Load<Texture2D>("character"), new Vector2(96, 64), position, 2);
-            this.position = position;
-            velocity = new Vector2(0, 0);
-            bounds = new Rectangle((int)position.X + boundsOffsetX, (int)position.Y, (int)animation.FrameSize.X - 2 * boundsOffsetX, (int)animation.FrameSize.Y);
+            _animation = new Animator(content.Load<Texture2D>("character"), new Vector2(96, 64), position, 2);
+            _position = position;
+            _velocity = new Vector2(0, 0);
+            _bounds = new Rectangle((int)position.X + _boundsOffsetX, (int)position.Y, (int)_animation.FrameSize.X - 2 * _boundsOffsetX, (int)_animation.FrameSize.Y);
         }
 
         public void Update(GameTime gameTime)
@@ -44,84 +44,84 @@ namespace Rise
             float delta = (float)gameTime.ElapsedGameTime.TotalSeconds * 10; // delta time
             
 
-            if (movement == Movement.None)
+            if (_movement == Movement.None)
             {
-                velocity.X = 0;
+                _velocity.X = 0;
             }
-            else if (movement == Movement.Right && movement != Movement.Left)
+            else if (_movement == Movement.Right && _movement != Movement.Left)
             {
-                velocity.X = moveSpeed;
+                _velocity.X = _moveSpeed;
             }
-            else if (movement == Movement.Left && movement != Movement.Right)
+            else if (_movement == Movement.Left && _movement != Movement.Right)
             {
-                velocity.X = -moveSpeed;
+                _velocity.X = -_moveSpeed;
             }
 
-            if (!onGround)
+            if (!_onGround)
             {
-                velocity.Y += Game1.GRAVITY;
+                _velocity.Y += Game1.GRAVITY;
             }
             else
             {
-                velocity.Y = Game1.GRAVITY;
+                _velocity.Y = Game1.GRAVITY;
             }
 
-            Animate(movement);
-            
+            Animate(_movement);
 
-            position += velocity * delta;
 
-            animation.Position = position;
-            bounds.X = (int)position.X;
-            bounds.Y = (int)position.Y;
+            _position += _velocity * delta;
 
-            animation.Update(gameTime);
+            _animation.Position = _position;
+            _bounds.X = (int)_position.X;
+            _bounds.Y = (int)_position.Y;
+
+            _animation.Update(gameTime);
         }
         public void Draw(SpriteBatch spriteBatch)
         {
-            animation.Draw(spriteBatch);
+            _animation.Draw(spriteBatch);
         }
         private void Jump()
         {
-            if (onGround)
+            if (_onGround)
             {
-                velocity.Y = jumpForce;
-                onGround = false;
+                _velocity.Y = _jumpForce;
+                _onGround = false;
             }
         }
         private void Animate(Movement movement)
         {
             if (movement != Movement.None)
             {
-                if (onGround)
+                if (_onGround)
                 {
-                    animation.Play((int)movement, FRAMES, time);
+                    _animation.Play((int)movement, Frames, _time);
                 }
                 else
                 {
-                    animation.PlaySingle(0, (int)movement);
+                    _animation.PlaySingle(0, (int)movement);
                 }
             }
             else
             {
-                animation.PlaySingle(0, (int)lastMovement);
+                _animation.PlaySingle(0, (int)_lastMovement);
             }
         }
         public void Controls(KeyboardState state)
         {
             if (state.IsKeyDown(Keys.D))
             {
-                movement = Movement.Right;
-                lastMovement = Movement.Right;
+                _movement = Movement.Right;
+                _lastMovement = Movement.Right;
             }
             else if (state.IsKeyDown(Keys.A))
             {
-                movement = Movement.Left;
-                lastMovement = Movement.Left;
+                _movement = Movement.Left;
+                _lastMovement = Movement.Left;
             }
             else if (state.IsKeyUp(Keys.A) && state.IsKeyUp(Keys.D))
             {
-                movement = Movement.None;
+                _movement = Movement.None;
             }
             
             if (state.IsKeyDown(Keys.Space))
@@ -131,27 +131,27 @@ namespace Rise
         }
         public Rectangle Bounds
         {
-            get { return bounds; }
+            get { return _bounds; }
         }
         public Movement Movement
         {
-            get { return movement; }
-            set { movement = value; }
+            get { return _movement; }
+            set { _movement = value; }
         }
         public bool OnGround
         {
-            get { return onGround; }
-            set { onGround = value; }
+            get { return _onGround; }
+            set { _onGround = value; }
         }
         public float X
         {
-            get { return position.X; }
-            set { position.X = value; }
+            get { return _position.X; }
+            set { _position.X = value; }
         }
         public float Y
         {
-            get { return position.Y; }
-            set { position.Y = value; }
+            get { return _position.Y; }
+            set { _position.Y = value; }
         }
     }
 }

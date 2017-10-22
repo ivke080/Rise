@@ -6,33 +6,33 @@ namespace Rise
 {
     class Animator
     {
-        private Texture2D texture;
-        private Vector2 position; // position of the animation in global space
-        private Vector2 frameSize;
+        private Texture2D _texture;
+        private Vector2 _position; // position of the animation in global space
+        private Vector2 _frameSize;
 
-        private int frames; // number of frames for current animation
+        private int _frames; // number of frames for current animation
 
-        private int startFrame; // animation start frame
+        private int _startFrame; // animation start frame
 
-        private float time; // duration of current animation in seconds
-        private float elapsedTime;
+        private float _time; // duration of current animation in seconds
+        private float _elapsedTime;
 
-        private int currentX; // current frame X
-        private int currentY; // current frame Y
-        private Rectangle currentFrame;
+        private int _currentX; // current frame X
+        private int _currentY; // current frame Y
+        private Rectangle _currentFrame;
 
-        private bool singleFrame;
+        private bool _singleFrame;
 
         public Animator(Texture2D texture, Vector2 frameSize, Vector2 position, int startFrame)
         {
-            this.texture = texture;
-            this.frameSize = frameSize;
-            this.position = position;
-            this.startFrame = startFrame;
+            _texture = texture;
+            _frameSize = frameSize;
+            _position = position;
+            _startFrame = startFrame;
 
-            currentX = 0;
-            currentY = -1;
-            currentFrame = new Rectangle(0, 0, (int)frameSize.X, (int)frameSize.Y);
+            _currentX = 0;
+            _currentY = -1;
+            _currentFrame = new Rectangle(0, 0, (int)frameSize.X, (int)frameSize.Y);
         }
 
         public void PlaySingle(int frameX, int frameY)
@@ -40,60 +40,60 @@ namespace Rise
             // commented for player to move properly while mid-air
             //if (!singleFrame)
             //{
-                singleFrame = true;
-                currentFrame.X = frameX * (int)frameSize.X;
-                currentFrame.Y = frameY * (int)frameSize.Y;
+                _singleFrame = true;
+                _currentFrame.X = frameX * (int)_frameSize.X;
+                _currentFrame.Y = frameY * (int)_frameSize.Y;
 
-                currentY = -1;
-                currentX = 0;
+                _currentY = -1;
+                _currentX = 0;
             //}
         }
         public void Play(int row, int frames, float time)
         {
-            if (currentY != row)
+            if (_currentY != row)
             {
-                this.frames = frames;
-                this.time = time;
-                singleFrame = false;
-                currentY = row;
-                currentX = startFrame;
-                currentFrame.X = startFrame;
-                currentFrame.Y = row * (int)frameSize.Y;
+                _frames = frames;
+                _time = time;
+                _singleFrame = false;
+                _currentY = row;
+                _currentX = _startFrame;
+                _currentFrame.X = _startFrame;
+                _currentFrame.Y = row * (int)_frameSize.Y;
             }
         }
         public void Update(GameTime gameTime)
         {
-            if (singleFrame)
+            if (_singleFrame)
             {
                 return;
             }
 
-            elapsedTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            _elapsedTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            if (elapsedTime >= time)
+            if (_elapsedTime >= _time)
             {
-                currentX++;
-                if (currentX >= frames)
+                _currentX++;
+                if (_currentX >= _frames)
                 {
-                    currentX = 0;
+                    _currentX = 0;
                 }
-                elapsedTime = 0;
-                currentFrame.X = currentX * (int)frameSize.X;
+                _elapsedTime = 0;
+                _currentFrame.X = _currentX * (int)_frameSize.X;
             }
         }
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, position, currentFrame, Color.White);
+            spriteBatch.Draw(_texture, _position, _currentFrame, Color.White);
         }
 
         public Vector2 Position
         {
-            get { return position; }
-            set { position = value; }
+            get { return _position; }
+            set { _position = value; }
         }
         public Vector2 FrameSize
         {
-            get { return frameSize; }
+            get { return _frameSize; }
         }
     }
 }

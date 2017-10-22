@@ -23,3 +23,5 @@ C:\Users\ivke11080\Documents\Visual Studio 2017\Projects\Rise\Rise\obj\x86\Debug
 C:\Users\ivke11080\Documents\Visual Studio 2017\Projects\Rise\Rise\obj\x86\Debug\Rise.csproj.CoreCompileInputs.cache
 C:\Users\ivke11080\Documents\Visual Studio 2017\Projects\Rise\Rise\obj\x86\Debug\Rise.exe
 C:\Users\ivke11080\Documents\Visual Studio 2017\Projects\Rise\Rise\obj\x86\Debug\Rise.pdb
+C:\Users\ivke11080\Documents\Visual Studio 2017\Projects\Rise\Rise\bin\Windows\x86\Debug\Content\stone_ground_long.xnb
+C:\Users\ivke11080\Documents\Visual Studio 2017\Projects\Rise\Rise\bin\Windows\x86\Debug\Content\stone_ground_short.xnb
