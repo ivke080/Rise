@@ -37,7 +37,7 @@ namespace Rise
             // TODO: Add your initialization logic here
 
             player = new Player(this.Content, new Vector2(100, HEIGHT - 64));
-            solid = new SolidPlatform(this.Content.Load<Texture2D>("stone_ground_long"), new Vector2(300, HEIGHT - 200), PlatformSize.Long);
+            solid = new SolidPlatform(this.Content.Load<Texture2D>("stone_ground_long"), new Vector2(300, HEIGHT - 160), PlatformSize.Long);
 
             base.Initialize();
         }
@@ -71,14 +71,30 @@ namespace Rise
 
             // TODO: Add your update logic here
 
-            if (player.Bounds.Y + player.Bounds.Height >= HEIGHT)
-            {
-                player.OnGround = true;
-                player.Y = HEIGHT - player.Bounds.Height;
-            }
 
             player.Controls(Keyboard.GetState());
             player.Update(gameTime);
+
+
+            if (Collision.PlayerToPlatform(player, solid))
+            {
+                if (player.Falling)
+                {
+                    player.Stop();
+                    player.Falling = false;
+                    player.Y = solid.Bounds.Y - player.Bounds.Height + 1;
+                }
+            }
+            else
+            {
+                player.OnGround = false;
+            }
+
+            if (player.Bounds.Y + player.Bounds.Height >= HEIGHT-10)
+            {
+                player.Stop();
+                player.Y = HEIGHT - player.Bounds.Height;
+            }
 
             base.Update(gameTime);
         }

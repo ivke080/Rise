@@ -24,10 +24,11 @@ namespace Rise
         private Rectangle _bounds;
 
         private float _moveSpeed = 20;
-        private float _jumpForce = -120;
+        private float _jumpForce = 120;
         private float _time = 0.1f;
-        private int _boundsOffsetX = 12; // sprite is wider than actual character
+        private int _boundsOffsetX = 30; // sprite is wider than actual character
         private bool _onGround = false;
+        private bool _falling = false;
 
         private const int Frames = 4;
 
@@ -63,7 +64,17 @@ namespace Rise
             }
             else
             {
-                _velocity.Y = Game1.GRAVITY;
+                _velocity.Y = 0;
+            }
+            
+
+            if (_velocity.Y > 0)
+            {
+                _falling = true;
+            }
+            else
+            {
+                _falling = false;
             }
 
             Animate(_movement);
@@ -72,7 +83,7 @@ namespace Rise
             _position += _velocity * delta;
 
             _animation.Position = _position;
-            _bounds.X = (int)_position.X;
+            _bounds.X = (int)_position.X + _boundsOffsetX;
             _bounds.Y = (int)_position.Y;
 
             _animation.Update(gameTime);
@@ -85,7 +96,7 @@ namespace Rise
         {
             if (_onGround)
             {
-                _velocity.Y = _jumpForce;
+                _velocity.Y = -_jumpForce;
                 _onGround = false;
             }
         }
@@ -129,6 +140,14 @@ namespace Rise
                 Jump();
             }
         }
+        public void Stop()
+        {
+            _onGround = true;
+            _velocity.Y = 0;
+        }
+
+
+
         public Rectangle Bounds
         {
             get { return _bounds; }
@@ -142,6 +161,11 @@ namespace Rise
         {
             get { return _onGround; }
             set { _onGround = value; }
+        }
+        public bool Falling
+        {
+            get { return _falling; }
+            set { _falling = value; }
         }
         public float X
         {
