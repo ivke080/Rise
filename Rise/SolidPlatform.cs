@@ -20,6 +20,15 @@ namespace Rise
         {
         }
 
+        public override void Update(GameTime gameTime)
+        {
+            float delta = (float)gameTime.ElapsedGameTime.TotalSeconds * 10;
+
+            _position.Y += CurrentDownSpeed * delta;
+
+            _bounds.Y = (int)_position.Y;
+        }
+
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(_texture, _position, Color.White);

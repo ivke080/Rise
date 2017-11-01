@@ -18,13 +18,14 @@ namespace Rise
         private Vector2 _position;
         private Vector2 _velocity;
 
+        private Platform _platform; // reference for the platform that player is standing on
+
         private Movement _movement = Movement.None;
         private Movement _lastMovement = Movement.Right;
 
         private Rectangle _bounds;
 
         private float _moveSpeed = 20;
-        private float _jumpForce = 120;
         private float _time = 0.1f;
         private int _boundsOffsetX = 30; // sprite is wider than actual character
         private bool _onGround = false;
@@ -80,7 +81,23 @@ namespace Rise
             Animate(_movement);
 
 
-            _position += _velocity * delta;
+            //_position += _velocity * delta; old code
+            _position.X += _velocity.X * delta;
+
+            // This part of the code is for centering player when Y < Height/2
+            // disabling it to go up (lover than Height/2)
+            if (_position.Y > Game1.HEIGHT / 2)
+                _position.Y += _velocity.Y * delta;
+            else
+            {
+                if (_velocity.Y > 0)
+                    _position.Y += _velocity.Y * delta;
+            }
+            // end of the centering code
+            if (_platform != null)
+            {
+                _position.Y = _platform.Bounds.Y - _bounds.Height + 2;
+            }
 
             _animation.Position = _position;
             _bounds.X = (int)_position.X + _boundsOffsetX;
@@ -92,12 +109,13 @@ namespace Rise
         {
             _animation.Draw(spriteBatch);
         }
-        private void Jump()
+        private void Jump(float jumpForce = 120)
         {
             if (_onGround)
             {
-                _velocity.Y = -_jumpForce;
+                _velocity.Y = -jumpForce;
                 _onGround = false;
+                _platform = null;
             }
         }
         private void Animate(Movement movement)
@@ -146,7 +164,12 @@ namespace Rise
             _velocity.Y = 0;
         }
 
-
+        public bool GoingUp()
+        {
+            if (!_falling && !_onGround)
+                return true;
+            return false;
+        }
 
         public Rectangle Bounds
         {
@@ -176,6 +199,15 @@ namespace Rise
         {
             get { return _position.Y; }
             set { _position.Y = value; }
+        }
+        public Platform Platform
+        {
+            get { return _platform; }
+            set { _platform = value; }
+        }
+        public float VelocityY
+        {
+            get { return _velocity.Y; }
         }
     }
 }

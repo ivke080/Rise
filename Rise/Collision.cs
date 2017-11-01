@@ -7,7 +7,7 @@ namespace Rise
 {
     static class Collision
     {
-        public static bool PlayerToPlatform(Player player, Platform platform)
+        public static bool SinglePlatform(Player player, Platform platform)
         {
             if (player.Bounds.X + player.Bounds.Width >= platform.Bounds.X)
             {
@@ -23,6 +23,29 @@ namespace Rise
                 }
             }
             return false;
+        }
+
+        public static void ManyPlatforms(Player player, Platform[] platforms)
+        {
+            bool collision = false;
+            for (int i = 0; i < platforms.Length; i++)
+            {
+                if (SinglePlatform(player, platforms[i]))
+                {
+                    if (player.Falling)
+                    {
+                        player.Stop();
+                        player.Falling = false;
+                        player.Platform = platforms[i];
+                    }
+                    collision = true;
+                }
+            }
+            if (!collision)
+            {
+                player.OnGround = false;
+                player.Platform = null;
+            }
         }
     }
 }

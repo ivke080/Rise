@@ -18,6 +18,9 @@ namespace Rise
 
         protected const int Height = 48;
 
+        public static float DownSpeed = 3f;
+        public static float CurrentDownSpeed = 3f;
+
         public Platform(Vector2 position, PlatformSize size)
         {
             _position = position;
@@ -33,10 +36,11 @@ namespace Rise
         }
 
         public abstract void Draw(SpriteBatch spriteBatch);
+        public abstract void Update(GameTime gameTime);
 
         public Rectangle Bounds
         {
             get { return _bounds; }
-        }
+        }        
     }
 }

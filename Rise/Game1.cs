@@ -14,7 +14,8 @@ namespace Rise
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Player player;
-        Platform solid;
+        Platform solid, solidShort;
+        PlatformManager platformManager;
 
         public Game1()
         {
@@ -37,8 +38,9 @@ namespace Rise
             // TODO: Add your initialization logic here
 
             player = new Player(this.Content, new Vector2(100, HEIGHT - 64));
-            solid = new SolidPlatform(this.Content.Load<Texture2D>("stone_ground_long"), new Vector2(300, HEIGHT - 160), PlatformSize.Long);
-
+            //solid = new SolidPlatform(this.Content.Load<Texture2D>("stone_ground_long"), new Vector2(300, HEIGHT - 500), PlatformSize.Long);
+            //solidShort = new SolidPlatform(this.Content.Load<Texture2D>("stone_ground_short"), new Vector2(120, HEIGHT - 320), PlatformSize.Short);
+            platformManager = new PlatformManager(new Microsoft.Xna.Framework.Content.ContentManager(Content.ServiceProvider, Content.RootDirectory));
             base.Initialize();
         }
         
@@ -59,6 +61,7 @@ namespace Rise
         {
             // TODO: Unload any non ContentManager content here
             Content.Unload();
+            platformManager.Unload();
         }
         
         /// Allows the game to run logic such as updating the world,
@@ -74,21 +77,49 @@ namespace Rise
 
             player.Controls(Keyboard.GetState());
             player.Update(gameTime);
+            platformManager.Update(gameTime);
 
+            Collision.ManyPlatforms(player, platformManager.Platforms);
 
-            if (Collision.PlayerToPlatform(player, solid))
+            if (player.GoingUp())
+            {
+                if (player.Y < Game1.HEIGHT/2)
+                {
+                    Platform.CurrentDownSpeed = -player.VelocityY;
+                }
+            }
+            else
+            {
+                Platform.CurrentDownSpeed = Platform.DownSpeed;
+            }
+            /*solid.Update(gameTime);
+            solidShort.Update(gameTime);
+
+            if (Collision.SinglePlatform(player, solid))
             {
                 if (player.Falling)
                 {
                     player.Stop();
                     player.Falling = false;
-                    player.Y = solid.Bounds.Y - player.Bounds.Height + 1;
+                    //player.Y = solid.Bounds.Y - player.Bounds.Height - 5;
+                    player.Platform = solid;
+                }
+            }
+            else if (Collision.SinglePlatform(player, solidShort))
+            {
+                if (player.Falling)
+                {
+                    player.Stop();
+                    player.Falling = false;
+                    //player.Y = solidShort.Bounds.Y - player.Bounds.Height - 5;
+                    player.Platform = solidShort;
                 }
             }
             else
             {
                 player.OnGround = false;
-            }
+                player.Platform = null;
+            }*/
 
             if (player.Bounds.Y + player.Bounds.Height >= HEIGHT-10)
             {
@@ -109,8 +140,10 @@ namespace Rise
 
             spriteBatch.Begin();
 
+            //solid.Draw(spriteBatch);
+            //solidShort.Draw(spriteBatch);
+            platformManager.Draw(spriteBatch);
             player.Draw(spriteBatch);
-            solid.Draw(spriteBatch);
 
             spriteBatch.End();
 
