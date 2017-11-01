@@ -24,9 +24,12 @@ namespace Rise
         {
             float delta = (float)gameTime.ElapsedGameTime.TotalSeconds * 10;
 
-            _position.Y += CurrentDownSpeed * delta;
+            if (Move)
+            {
+                _position.Y += CurrentDownSpeed * delta;
 
-            _bounds.Y = (int)_position.Y;
+                _bounds.Y = (int)_position.Y;
+            }
         }
 
         public override void Draw(SpriteBatch spriteBatch)

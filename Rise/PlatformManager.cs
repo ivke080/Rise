@@ -52,7 +52,7 @@ namespace Rise
 
         private Platform CreatePlatform(int index)
         {
-            PlatformSize size = (PlatformSize)_rand.Next(0, 2);
+            PlatformSize size = (PlatformSize)_rand.Next(0, 3);
             string textureKey = "Solid_" + size.ToString(); // there will be more platforms, so it should be another random
 
             int x = _rand.Next(100, Game1.WIDTH - 200);
@@ -68,7 +68,8 @@ namespace Rise
              *  Remove or fix this function, after you add different types of platforms.
              *  Maybe you can use CreatePlatform somehow, instead code repetition
              */
-            for (int i = 0; i < NumberOfPlatforms; i++)
+            _platforms[0] = new SolidPlatform(_textures["Dirt_Ground_Bottom"], new Vector2(0, Game1.HEIGHT - 48), PlatformSize.None);
+            for (int i = 1; i < NumberOfPlatforms; i++)
             {
                 PlatformSize size = (PlatformSize)_rand.Next(0, 2);
                 string textureKey = "Solid_" + size.ToString();
@@ -96,6 +97,8 @@ namespace Rise
         {
             _textures.Add("Solid_Long", _content.Load<Texture2D>("stone_ground_long"));
             _textures.Add("Solid_Short", _content.Load<Texture2D>("stone_ground_short"));
+            _textures.Add("Solid_Medium", _content.Load<Texture2D>("stone_ground_medium"));
+            _textures.Add("Dirt_Ground_Bottom", _content.Load<Texture2D>("dirt_ground_bottom"));
         }
 
         public Platform[] Platforms

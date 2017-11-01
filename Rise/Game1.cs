@@ -37,7 +37,7 @@ namespace Rise
         {
             // TODO: Add your initialization logic here
 
-            player = new Player(this.Content, new Vector2(100, HEIGHT - 64));
+            player = new Player(this.Content, new Vector2(100, HEIGHT - 200));
             //solid = new SolidPlatform(this.Content.Load<Texture2D>("stone_ground_long"), new Vector2(300, HEIGHT - 500), PlatformSize.Long);
             //solidShort = new SolidPlatform(this.Content.Load<Texture2D>("stone_ground_short"), new Vector2(120, HEIGHT - 320), PlatformSize.Short);
             platformManager = new PlatformManager(new Microsoft.Xna.Framework.Content.ContentManager(Content.ServiceProvider, Content.RootDirectory));

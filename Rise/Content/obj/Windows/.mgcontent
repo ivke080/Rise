@@ -5,7 +5,9 @@
   <Config />
   <SourceFiles>
     <File>C:/Users/ivke11080/Documents/Visual Studio 2017/Projects/Rise/Rise/Content/character.png</File>
-    <File>C:/Users/ivke11080/Documents/Visual Studio 2017/Projects/Rise/Rise/Content/stone_ground_long.png</File>
     <File>C:/Users/ivke11080/Documents/Visual Studio 2017/Projects/Rise/Rise/Content/stone_ground_short.png</File>
+    <File>C:/Users/ivke11080/Documents/Visual Studio 2017/Projects/Rise/Rise/Content/stone_ground_medium.png</File>
+    <File>C:/Users/ivke11080/Documents/Visual Studio 2017/Projects/Rise/Rise/Content/dirt_ground_bottom.png</File>
+    <File>C:/Users/ivke11080/Documents/Visual Studio 2017/Projects/Rise/Rise/Content/stone_ground_long.png</File>
   </SourceFiles>
 </SourceFileCollection>

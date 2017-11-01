@@ -92,6 +92,7 @@ namespace Rise
             {
                 if (_velocity.Y > 0)
                     _position.Y += _velocity.Y * delta;
+                Platform.Move = true;
             }
             // end of the centering code
             if (_platform != null)

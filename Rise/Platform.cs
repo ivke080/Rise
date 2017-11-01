@@ -8,7 +8,9 @@ namespace Rise
     enum PlatformSize
     {
         Short,
-        Long
+        Medium,
+        Long,
+        None
     }
     abstract class Platform
     {
@@ -20,13 +22,22 @@ namespace Rise
 
         public static float DownSpeed = 3f;
         public static float CurrentDownSpeed = 3f;
+        public static bool Move = false;
 
         public Platform(Vector2 position, PlatformSize size)
         {
             _position = position;
             _size = size;
 
-            int width = (size == PlatformSize.Short) ? 72 : 144;
+            int width;
+            if (size == PlatformSize.Short)
+                width = 72;
+            else if (size == PlatformSize.Medium)
+                width = 144;
+            else if (size == PlatformSize.Long)
+                width = 216;
+            else
+                width = Game1.WIDTH; // bottom dirt ground
 
             _bounds = new Rectangle((int)position.X, (int)position.Y, width, Height);
         }
