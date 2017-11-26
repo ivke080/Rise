@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Rise.Platforms;
+using Rise.GameStates;
 
 namespace Rise
 {
@@ -14,7 +16,6 @@ namespace Rise
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Player player;
-        Platform solid, solidShort;
         PlatformManager platformManager;
 
         public Game1()
@@ -28,34 +29,22 @@ namespace Rise
             Content.RootDirectory = "Content";
         }
         
-        /// Allows the game to perform any initialization it needs to before starting to run.
-        /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
-        /// and initialize them as well.
-        
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
 
             player = new Player(this.Content, new Vector2(100, HEIGHT - 200));
-            //solid = new SolidPlatform(this.Content.Load<Texture2D>("stone_ground_long"), new Vector2(300, HEIGHT - 500), PlatformSize.Long);
-            //solidShort = new SolidPlatform(this.Content.Load<Texture2D>("stone_ground_short"), new Vector2(120, HEIGHT - 320), PlatformSize.Short);
             platformManager = new PlatformManager(new Microsoft.Xna.Framework.Content.ContentManager(Content.ServiceProvider, Content.RootDirectory));
+
             base.Initialize();
         }
         
-        /// LoadContent will be called once per game and is the place to load
-        /// all of your content.
-
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
         }
-        
-        /// UnloadContent will be called once per game and is the place to unload
-        /// game-specific content.
 
         protected override void UnloadContent()
         {
@@ -63,9 +52,6 @@ namespace Rise
             Content.Unload();
             platformManager.Unload();
         }
-        
-        /// Allows the game to run logic such as updating the world,
-        /// checking for collisions, gathering input, and playing audio.
         
         protected override void Update(GameTime gameTime)
         {
@@ -75,9 +61,10 @@ namespace Rise
             // TODO: Add your update logic here
 
 
+            platformManager.Update(gameTime);
             player.Controls(Keyboard.GetState());
             player.Update(gameTime);
-            platformManager.Update(gameTime);
+            
 
             Collision.ManyPlatforms(player, platformManager.Platforms);
 
@@ -92,34 +79,6 @@ namespace Rise
             {
                 Platform.CurrentDownSpeed = Platform.DownSpeed;
             }
-            /*solid.Update(gameTime);
-            solidShort.Update(gameTime);
-
-            if (Collision.SinglePlatform(player, solid))
-            {
-                if (player.Falling)
-                {
-                    player.Stop();
-                    player.Falling = false;
-                    //player.Y = solid.Bounds.Y - player.Bounds.Height - 5;
-                    player.Platform = solid;
-                }
-            }
-            else if (Collision.SinglePlatform(player, solidShort))
-            {
-                if (player.Falling)
-                {
-                    player.Stop();
-                    player.Falling = false;
-                    //player.Y = solidShort.Bounds.Y - player.Bounds.Height - 5;
-                    player.Platform = solidShort;
-                }
-            }
-            else
-            {
-                player.OnGround = false;
-                player.Platform = null;
-            }*/
 
             if (player.Bounds.Y + player.Bounds.Height >= HEIGHT-10)
             {
@@ -140,8 +99,6 @@ namespace Rise
 
             spriteBatch.Begin();
 
-            //solid.Draw(spriteBatch);
-            //solidShort.Draw(spriteBatch);
             platformManager.Draw(spriteBatch);
             player.Draw(spriteBatch);
 

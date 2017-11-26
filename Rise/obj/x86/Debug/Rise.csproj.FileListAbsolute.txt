@@ -27,3 +27,10 @@ C:\Users\ivke11080\Documents\Visual Studio 2017\Projects\Rise\Rise\bin\Windows\x
 C:\Users\ivke11080\Documents\Visual Studio 2017\Projects\Rise\Rise\bin\Windows\x86\Debug\Content\stone_ground_short.xnb
 C:\Users\ivke11080\Documents\Visual Studio 2017\Projects\Rise\Rise\bin\Windows\x86\Debug\Content\dirt_ground_bottom.xnb
 C:\Users\ivke11080\Documents\Visual Studio 2017\Projects\Rise\Rise\bin\Windows\x86\Debug\Content\stone_ground_medium.xnb
+C:\Users\ivke11080\Documents\Visual Studio 2017\Projects\Rise\Rise\bin\Windows\x86\Debug\Content\jump_ground_medium.xnb
+C:\Users\ivke11080\Documents\Visual Studio 2017\Projects\Rise\Rise\bin\Windows\x86\Debug\Content\btn_long_brown.xnb
+C:\Users\ivke11080\Documents\Visual Studio 2017\Projects\Rise\Rise\bin\Windows\x86\Debug\Content\btn_long_brown_pressed.xnb
+C:\Users\ivke11080\Documents\Visual Studio 2017\Projects\Rise\Rise\bin\Windows\x86\Debug\Content\btn_short_brown.xnb
+C:\Users\ivke11080\Documents\Visual Studio 2017\Projects\Rise\Rise\bin\Windows\x86\Debug\Content\btn_short_brown_pressed.xnb
+C:\Users\ivke11080\Documents\Visual Studio 2017\Projects\Rise\Rise\bin\Windows\x86\Debug\Content\cursor.xnb
+C:\Users\ivke11080\Documents\Visual Studio 2017\Projects\Rise\Rise\bin\Windows\x86\Debug\Content\medieval.xnb

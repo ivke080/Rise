@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
+using Rise.Platforms;
 
 namespace Rise
 {
@@ -110,7 +111,7 @@ namespace Rise
         {
             _animation.Draw(spriteBatch);
         }
-        private void Jump(float jumpForce = 120)
+        public void Jump(float jumpForce = 120)
         {
             if (_onGround)
             {

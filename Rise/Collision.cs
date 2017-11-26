@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using Rise.Platforms;
 
 namespace Rise
 {
@@ -37,6 +38,13 @@ namespace Rise
                         player.Stop();
                         player.Falling = false;
                         player.Platform = platforms[i];
+
+                        if (platforms[i] is SolidPlatform)
+                        {
+                            SolidPlatform sp = (SolidPlatform)platforms[i];
+                            if (sp.Type == SolidPlatformType.Lava)
+                                player.Jump(300);
+                        }
                     }
                     collision = true;
                 }
