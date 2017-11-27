@@ -12,6 +12,8 @@ namespace Rise.Gui
         private SpriteFont _font;
         private Vector2 _textPosition;
 
+        private Vector2 _clickMovement = new Vector2(0, 5); // to move button down when clicked
+
         public TextButton(Rectangle bounds, Texture2D backSprite, Texture2D backSpritePressed, SpriteFont font, string text)
             : base(bounds, backSprite, backSpritePressed)
         {
@@ -27,13 +29,22 @@ namespace Rise.Gui
         {
             if (_pressed)
             {
-                spriteBatch.Draw(_backSpritePressed, _position, Color.White);
+                spriteBatch.Draw(_backSpritePressed, _position + _clickMovement, Color.White);
+                spriteBatch.DrawString(_font, _text, _textPosition + _clickMovement, Color.White);
             }
             else
             {
                 spriteBatch.Draw(_backSprite, _position, Color.White);
+                spriteBatch.DrawString(_font, _text, _textPosition, Color.White);
             }
-            spriteBatch.DrawString(_font, _text, _textPosition, Color.White);
+        }
+
+        public string Text
+        {
+            get
+            {
+                return _text;
+            }
         }
     }
 }

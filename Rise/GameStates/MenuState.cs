@@ -11,11 +11,17 @@ namespace Rise.GameStates
     class MenuState : GameState
     {
         private SpriteFont _font;
-        private Texture2D _button;
-        private Texture2D _buttonPressed;
+        private Texture2D _buttonTexture;
+        private Texture2D _buttonPressedTexture;
+        private Texture2D _background;
+        private Texture2D _cursor;
 
-        private TextButton _btnStart;
-        private TextButton _btnExit;
+        private TextButton[] _buttons;
+
+        private Vector2 _bgPosition = new Vector2(0, -Game1.HEIGHT);
+        private Vector2 _mousePosition;
+
+        MouseState _previousMouse;
 
         public MenuState(ContentManager content)
             : base(content)
@@ -25,28 +31,69 @@ namespace Rise.GameStates
 
         public override void Initialize()
         {
-            _btnStart = new TextButton(new Rectangle((int)(Game1.WIDTH / 2 - _button.Bounds.Width / 2), (int)(Game1.HEIGHT / 2 - _button.Bounds.Height), _button.Bounds.Width, _button.Bounds.Height), 
-                                       _button, _buttonPressed, _font, "Start Game");
-            _btnExit = new TextButton(new Rectangle((int)(Game1.WIDTH / 2 - _button.Bounds.Width / 2), (int)(Game1.HEIGHT / 2 + _button.Bounds.Height - 20), _button.Bounds.Width, _button.Bounds.Height),
-                                       _button, _buttonPressed, _font, "Exit Game");
+            _buttons = new TextButton[2];
+            _buttons[0] = new TextButton(new Rectangle((int)(Game1.WIDTH / 2 - _buttonTexture.Bounds.Width / 2), (int)(Game1.HEIGHT / 2 - _buttonTexture.Bounds.Height), _buttonTexture.Bounds.Width, _buttonTexture.Bounds.Height),
+                                       _buttonTexture, _buttonPressedTexture, _font, "Start Game");
+            _buttons[1] = new TextButton(new Rectangle((int)(Game1.WIDTH / 2 - _buttonTexture.Bounds.Width / 2), (int)(Game1.HEIGHT / 2 + _buttonTexture.Bounds.Height - 30), _buttonTexture.Bounds.Width, _buttonTexture.Bounds.Height),
+                                       _buttonTexture, _buttonPressedTexture, _font, "Exit Game");
+
+            _previousMouse = Mouse.GetState();
         }
 
         public override void LoadContent()
         {
             _font = _content.Load<SpriteFont>("medieval");
-            _button = _content.Load<Texture2D>("btn_long_brown");
-            _buttonPressed = _content.Load<Texture2D>("btn_long_brown_pressed");
+            _buttonTexture = _content.Load<Texture2D>("btn_long_brown");
+            _buttonPressedTexture = _content.Load<Texture2D>("btn_long_brown_pressed");
+            _background = _content.Load<Texture2D>("background");
+            _cursor = _content.Load<Texture2D>("cursor");
         }
 
         public override void Update(GameTime gameTime)
         {
+            MouseState mouse = Mouse.GetState();
+
+            _mousePosition.X = mouse.Position.X;
+            _mousePosition.Y = mouse.Position.Y;
             
+            foreach (TextButton btn in _buttons)
+            {
+                if (btn.Bounds.Contains(mouse.Position))
+                {
+                    if (mouse.LeftButton == ButtonState.Pressed)
+                    {
+                        if (_previousMouse.LeftButton == ButtonState.Released)
+                        {
+                            btn.Pressed = true;
+                        }
+                    }
+                }
+
+                if (mouse.LeftButton == ButtonState.Released)
+                {
+                    if (btn.Pressed)
+                    {
+                        btn.Pressed = false;
+                        if (btn.Text == "Exit Game")
+                        {
+                            GameStateManager.Instance.RemoveAllStates();
+                        }
+                    }
+                }
+            }
+
+            _previousMouse = mouse;
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            _btnStart.Draw(spriteBatch);
-            _btnExit.Draw(spriteBatch);
+            spriteBatch.Draw(_background, _bgPosition, Color.White);
+            foreach (TextButton btn in _buttons)
+            {
+                btn.Draw(spriteBatch);
+            }
+            spriteBatch.Draw(_cursor, _mousePosition, Color.White);
+            
         }
     }
 }

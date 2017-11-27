@@ -34,3 +34,4 @@ C:\Users\ivke11080\Documents\Visual Studio 2017\Projects\Rise\Rise\bin\Windows\x
 C:\Users\ivke11080\Documents\Visual Studio 2017\Projects\Rise\Rise\bin\Windows\x86\Debug\Content\btn_short_brown_pressed.xnb
 C:\Users\ivke11080\Documents\Visual Studio 2017\Projects\Rise\Rise\bin\Windows\x86\Debug\Content\cursor.xnb
 C:\Users\ivke11080\Documents\Visual Studio 2017\Projects\Rise\Rise\bin\Windows\x86\Debug\Content\medieval.xnb
+C:\Users\ivke11080\Documents\Visual Studio 2017\Projects\Rise\Rise\bin\Windows\x86\Debug\Content\background.xnb

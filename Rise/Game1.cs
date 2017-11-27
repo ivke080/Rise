@@ -35,7 +35,7 @@ namespace Rise
 
             player = new Player(this.Content, new Vector2(100, HEIGHT - 200));
             platformManager = new PlatformManager(new Microsoft.Xna.Framework.Content.ContentManager(Content.ServiceProvider, Content.RootDirectory));
-
+            GameStateManager.Instance.AddState(new MenuState(Content));
             base.Initialize();
         }
         
@@ -58,13 +58,19 @@ namespace Rise
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            if (GameStateManager.Instance.Count == 0)
+            {
+                Exit();
+            }
+
             // TODO: Add your update logic here
 
 
-            platformManager.Update(gameTime);
-            player.Controls(Keyboard.GetState());
-            player.Update(gameTime);
-            
+            //platformManager.Update(gameTime);
+            //player.Controls(Keyboard.GetState());
+            //player.Update(gameTime);
+
+            GameStateManager.Instance.Update(gameTime);
 
             Collision.ManyPlatforms(player, platformManager.Platforms);
 
@@ -99,9 +105,9 @@ namespace Rise
 
             spriteBatch.Begin();
 
-            platformManager.Draw(spriteBatch);
-            player.Draw(spriteBatch);
-
+            //platformManager.Draw(spriteBatch);
+            //player.Draw(spriteBatch);
+            GameStateManager.Instance.Draw(spriteBatch);
             spriteBatch.End();
 
             base.Draw(gameTime);

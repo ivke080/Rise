@@ -48,6 +48,7 @@
     <Compile Include="GameStates\GameStateManager.cs" />
     <Compile Include="GameStates\IGameState.cs" />
     <Compile Include="GameStates\MenuState.cs" />
+    <Compile Include="GameStates\PlayState.cs" />
     <Compile Include="Gui\Button.cs" />
     <Compile Include="Gui\TextButton.cs" />
     <Compile Include="Platforms\Platform.cs" />

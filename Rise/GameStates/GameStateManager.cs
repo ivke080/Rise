@@ -86,7 +86,7 @@ namespace Rise.GameStates
             }
         }
 
-        /*public void RemoveAllStates()
+        public void RemoveAllStates()
         {
             while (_states.Count > 0)
             {
@@ -95,6 +95,14 @@ namespace Rise.GameStates
             }
         }
 
+        public int Count
+        {
+            get
+            {
+                return _states.Count;
+            }
+        }
+        /*
         public void ChangeGameState(GameState state)
         {
             try
