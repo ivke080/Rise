@@ -93,12 +93,18 @@ namespace Rise
             {
                 if (_velocity.Y > 0)
                     _position.Y += _velocity.Y * delta;
-                Platform.Move = true;
+                PlatformManager.MoveDownward = true; 
             }
             // end of the centering code
             if (_platform != null)
             {
                 _position.Y = _platform.Bounds.Y - _bounds.Height + 2;
+
+                // If platform is moving left-right, set player position to stay on the platform
+                if (_platform.HorizontalMovement)
+                {
+                    _position.X += _platform.HorizontalMovementDir * PlatformManager.HorizontalMovementSpeed * delta;
+                }
             }
 
             _animation.Position = _position;

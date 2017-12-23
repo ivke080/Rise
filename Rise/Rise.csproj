@@ -42,6 +42,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Animator.cs" />
+    <Compile Include="Collectables\Collectable.cs" />
     <Compile Include="Collision.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="GameStates\GameState.cs" />
@@ -56,7 +57,7 @@
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Platforms\SolidPlatform.cs" />
+    <Compile Include="Platforms\StaticPlatform.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">

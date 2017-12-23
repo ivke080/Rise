@@ -39,10 +39,10 @@ namespace Rise
                         player.Falling = false;
                         player.Platform = platforms[i];
 
-                        if (platforms[i] is SolidPlatform)
+                        if (platforms[i] is StaticPlatform)
                         {
-                            SolidPlatform sp = (SolidPlatform)platforms[i];
-                            if (sp.Type == SolidPlatformType.Lava)
+                            StaticPlatform sp = (StaticPlatform)platforms[i];
+                            if (sp.Type == StaticPlatformType.Lava)
                                 player.Jump(300);
                         }
                     }

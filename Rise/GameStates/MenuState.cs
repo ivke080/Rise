@@ -8,7 +8,7 @@ using Rise.Gui;
 
 namespace Rise.GameStates
 {
-    class MenuState : GameState
+    sealed class MenuState : GameState
     {
         private SpriteFont _font;
         private Texture2D _buttonTexture;
@@ -77,6 +77,10 @@ namespace Rise.GameStates
                         if (btn.Text == "Exit Game")
                         {
                             GameStateManager.Instance.RemoveAllStates();
+                        }
+                        else if (btn.Text == "Start Game")
+                        {
+                            GameStateManager.Instance.AddState(new PlayState(_content));
                         }
                     }
                 }

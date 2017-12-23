@@ -15,8 +15,8 @@ namespace Rise
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Player player;
-        PlatformManager platformManager;
+        //Player player;
+        //PlatformManager platformManager;
 
         public Game1()
         {
@@ -33,8 +33,8 @@ namespace Rise
         {
             // TODO: Add your initialization logic here
 
-            player = new Player(this.Content, new Vector2(100, HEIGHT - 200));
-            platformManager = new PlatformManager(new Microsoft.Xna.Framework.Content.ContentManager(Content.ServiceProvider, Content.RootDirectory));
+            //player = new Player(this.Content, new Vector2(100, HEIGHT - 200));
+            //platformManager = new PlatformManager(new Microsoft.Xna.Framework.Content.ContentManager(Content.ServiceProvider, Content.RootDirectory));
             GameStateManager.Instance.AddState(new MenuState(Content));
             base.Initialize();
         }
@@ -50,7 +50,7 @@ namespace Rise
         {
             // TODO: Unload any non ContentManager content here
             Content.Unload();
-            platformManager.Unload();
+            //platformManager.Unload();
         }
         
         protected override void Update(GameTime gameTime)
@@ -72,7 +72,7 @@ namespace Rise
 
             GameStateManager.Instance.Update(gameTime);
 
-            Collision.ManyPlatforms(player, platformManager.Platforms);
+            /*Collision.ManyPlatforms(player, platformManager.Platforms);
 
             if (player.GoingUp())
             {
@@ -90,7 +90,7 @@ namespace Rise
             {
                 player.Stop();
                 player.Y = HEIGHT - player.Bounds.Height;
-            }
+            }*/
 
             base.Update(gameTime);
         }
